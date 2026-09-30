@@ -7,7 +7,7 @@
 :: - DU in 11: auto installs 22000.556 atm; older skip_11_checks, without Server label; Home offline local account
 :: on upgrade: latest build, on offline install: 11 24H2 26100.2033 / 11 23H2 22631.2861 / 11 22H2 22621.1702 / 11 21H2 22000.318 / 22H2 19045.3803 / 21H2 19044.1288 / 21H1 19043.1348 / 20H2 19042.1052
 
-::# uncomment to skip GUI dialog for MCT choice: 1507 to 11 24H2 - or rename script: "11_24H2 MediaCreationTool.bat"
+::# uncomment to skip GUI dialog for MCT choice: 1507 to 11 26H2 - or rename script: "11_26H2 MediaCreationTool.bat"
 rem set MCT=2409
 
 ::# uncomment to start auto upgrade setup directly (no prompts) - or rename script: "auto 11 MediaCreationTool.bat"
@@ -47,9 +47,9 @@ set /a UNHIDE_BUSINESS=1
 ::# comment to not insert Enterprise esd links for 1607,1703 or update links for 1909,2004,20H2,21H2,22H2,11_21H2,11_22H2,11_23H2,11_24H2 in products.xml
 set /a INSERT_BUSINESS=1
 
-::# MCT Version choice dialog items and default-index [11_25H2]
-set VERSIONS=1507,1511,1607,1703,1709,1803,1809,1903,1909,20H1,20H2,21H1,21H2,22H2,11_21H2,11_22H2,11_23H2,11_24H2,11_25H2
-set /a dV=19
+::# MCT Version choice dialog items and default-index [11_26H2]
+set VERSIONS=1507,1511,1607,1703,1709,1803,1809,1903,1909,20H1,20H2,21H1,21H2,22H2,11_21H2,11_22H2,11_23H2,11_24H2,11_25H2,11_26H2
+set /a dV=20
 
 ::# MCT Preset choice dialog items and default-index [Select in MCT]
 set PRESETS=^&Auto Upgrade,Auto ^&ISO,Auto ^&USB,^&Select,MCT ^&Defaults
@@ -66,7 +66,7 @@ set "OS_ARCH=x64" & if "%PROCESSOR_ARCHITECTURE:~-2%" equ "86" if not defined PR
 
 ::# parse MCT choice from script name or commandline - accepts both formats: 1909 or 19H2 etc.
 for %%V in (1.1507 2.1511 3.1607 4.1703 5.1709 6.1803 7.1809 8.1903 8.19H1 9.1909 9.19H2 10.2004 10.20H1 11.2009 11.20H2 12.2104
- 12.21H1 13.2109 13.21H2 14.2210 14.22H2 15.2110 15.11_21H2 16.2209 16.11_22H2 17.2310 17.11_23H2 18.2409 18.11_24H2 19.11_25H2) do for %%s in (%MCT% %~n0 %*) do if /i %%~xV equ .%%~s set "MCT=%%~nV" & set "VID=%%~s"
+ 12.21H1 13.2109 13.21H2 14.2210 14.22H2 15.2110 15.11_21H2 16.2209 16.11_22H2 17.2310 17.11_23H2 18.2409 18.11_24H2 19.11_25H2 20.11_26H2) do for %%s in (%MCT% %~n0 %*) do if /i %%~xV equ .%%~s set "MCT=%%~nV" & set "VID=%%~s"
 if defined MCT if not defined VID set "MCT="
 
 ::# parse AUTO from script name or commandline - starts unattended upgrade / in-place repair / cross-edition
@@ -120,7 +120,7 @@ if not defined VID (set VID=%OS_VID%)
 (set MEDIA_EDITION=%MEDIA_EDITION:IoTEnterpriseS=Enterprise%)
 
 ::# get previous GUI selection if self elevated and skip to choice
-for %%s in (%*) do for %%P in (1 2 3 4) do if %%~ns gtr 0 if %%~ns lss 15 if %%~xs. equ .%%P. set /a PRE=%%P & set /a MCT=%%~ns
+for %%s in (%*) do for %%P in (1 2 3 4) do if %%~ns gtr 0 if %%~ns lss 21 if %%~xs. equ .%%P. set /a PRE=%%P & set /a MCT=%%~ns
 
 ::# write auto media preset hint
 %<%:f0 " Detected Media "%>>% & if defined MCT %<%:5f " %VID% "%>>%
@@ -141,6 +141,15 @@ if %MCT%0 lss 1 if %PRE%0 gtr 1 call :choices MCT "%VERSIONS%" %dV% "MCT Version
 if %MCT%0 gtr 1 if %PRE%0 lss 1 call :choices PRE "%PRESETS%"  %dP% "MCT Preset"  11 white 0x005a9e 320
 if %MCT%0 gtr 1 if %PRE%0 lss 1 goto choice-0 = cancel
 goto choice-%MCT%
+
+:choice-20
+set "VER=26300" & set "VID=11_26H2" & set "CB=26300.9457.260913-1737.26h2_ge_release_svc_refresh" & set "CT=2026/09/" & set "CC=2.1"
+:: as workaround for the missing CAB file URL, a products.xml has been added that was downloaded with MediaCreationTool.exe
+:: a local products_11_26H2.xml next to this script is used instead, if present
+set "XML=https://raw.githubusercontent.com/imperia777/MediaCreationTool.bat/hack26h2/products_11_26H2.xml"
+set "XMLFILE=products_11_26H2.xml"
+set "EXE=https://download.microsoft.com/download/0a8b07d9-a3bf-47b9-b71b-8e13354cec88/MediaCreationTool.exe"
+goto process ::# windows 11 26H2
 
 :choice-19
 set "VER=26200" & set "VID=11_25H2" & set "CB=26200.6899.251011-1532.25h2_ge_release_svc_refresh" & set "CT=2025/10/" & set "CC=2.1"
@@ -307,7 +316,7 @@ prompt $G & (<"%~f0" (set /p _=&for /l %%s in (1,1,20) do set _=& set /p _=& cal
 for /f "delims=:" %%s in ('echo;prompt $h$s$h:^|cmd /d') do set "|=%%s"&set ">>=\..\c nul&set /p s=%%s%%s%%s%%s%%s%%s%%s<nul&popd"
 set "<=pushd "%appdata%"&2>nul findstr /c:\ /a" &set ">=%>>%&echo;" &set "|=%|:~0,1%" &set /p s=\<nul>"%appdata%\c"
 ::# (un)define main variables
-for %%s in (OPTIONS MCT XML CAB EXE VID PRE AUTO ISO EDITION KEY ARCH LANGCODE NO_UPDATE DEF AKEY) do set "%%s="
+for %%s in (OPTIONS MCT XML XMLFILE CAB EXE VID PRE AUTO ISO EDITION KEY ARCH LANGCODE NO_UPDATE DEF AKEY) do set "%%s="
 for %%s in (latest_MCT.url) do if not exist %%s (echo;[InternetShortcut]&echo;URL=github.com/AveYo/MediaCreationTool.bat)>%%s
 goto Universal MCT
 
@@ -377,6 +386,7 @@ if %VER% geq 22621 (set X=11& set VIS=22H2)
 if %VER% geq 22631 (set X=11& set VIS=23H2)
 if %VER% geq 26100 (set X=11& set VIS=24H2)
 if %VER% geq 26200 (set X=11& set VIS=25H2)
+if %VER% geq 26300 (set X=11& set VIS=26H2)
 
 ::# refresh screen
 cls & <"%~f0" (set /p _=&for /l %%s in (1,1,20) do set _=& set/p _=& call echo;%%_%%)
@@ -388,6 +398,8 @@ echo;
 
 ::# download MCT and CAB / XML - new snippet to try via bits, net, certutil, and insecure/secure
 if defined EXE echo;%EXE% & call :DOWNLOAD "%EXE%" MediaCreationTool%VID%.exe
+if defined XMLFILE if exist "%ROOT%\%XMLFILE%" copy /y "%ROOT%\%XMLFILE%" products%VID%.xml >nul && set "XML="
+if defined XMLFILE if not defined XML echo;%ROOT%\%XMLFILE%
 if defined XML echo;%XML% & call :DOWNLOAD "%XML%" products%VID%.xml
 if defined CAB echo;%CAB% & call :DOWNLOAD "%CAB%" products%VID%.cab
 if exist products%VID%.xml copy /y products%VID%.xml products.xml >nul 2>nul
@@ -1031,7 +1043,7 @@ function PRODUCTS_XML { [xml]$xml = [io.file]::ReadAllText("$pwd\products.xml",[
      }}}
    }
  }
-#:: update existing FilePath entries for 1909, 2004, 2008 and insert entries for 21H2, 22H2, 11_21H2, 11_22H2, 11_23H2, 11_24H2 and 11_25H2
+#:: update existing FilePath entries for 1909, 2004, 2008 and insert entries for 21H2, 22H2, 11_21H2, 11_22H2, 11_23H2, 11_24H2, 11_25H2 and 11_26H2
  if ($insert -and $ver -gt 15063) {
    $items = $csv |group Client,Lang -AsHashTable -AsString
    if ($null -ne $items) {

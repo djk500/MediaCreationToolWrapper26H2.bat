@@ -12,16 +12,21 @@ Intel introduced SSE4.2 in the first Core i CPU generation from 2009, AMD introd
 FX processors in 2011. The Windows setup will abort the update if the CPU does not support these 
 instructions and this limitation cannot be bypassed. Use this script on your own risk!
 
-To initiate an automatic upgrade to Windows 11 25H2 on unsupported hardware, press **Windows + R**, 
-then paste and run the following command:
+To initiate an automatic upgrade to Windows 11 26H2 on unsupported hardware, press **Windows + R**, 
+then paste and run the following command (replace `11_26H2` with `11_25H2` to get 25H2 instead):
 ```
-powershell $v = '11_25H2'; $f = """$env:TEMP\auto $([CultureInfo]::InstalledUICulture) $v MediaCreationTool.bat""""; Invoke-WebRequest https://raw.githubusercontent.com/geissbuehler/MediaCreationTool.bat/hack25h2/MediaCreationTool.bat -OutFile $f; .$f
+powershell $v = '11_26H2'; $f = """$env:TEMP\auto $([CultureInfo]::InstalledUICulture) $v MediaCreationTool.bat""""; Invoke-WebRequest https://raw.githubusercontent.com/imperia777/MediaCreationTool.bat/hack26h2/MediaCreationTool.bat -OutFile $f; .$f
 ```
 
 Except for a User Account Control prompt requesting administrator privileges, this update command 
 executes the update process automatically without any additional user input. Make sure to not 
 interact with your computer until the save dialog for the ISO file appeared. The script may stall 
 if the Windows setup window does not remain in focus during this step.
+
+Since 25H2, Microsoft no longer publishes a static products CAB file for the Media Creation Tool, 
+so a products.xml downloaded with MediaCreationTool.exe is part of this repo (`products.xml` for 25H2, 
+`products_11_26H2.xml` for 26H2 build 26300.9457). For 26H2, a `products_11_26H2.xml` placed next to 
+the script is used instead of downloading it.
 
 Description
 -----------
