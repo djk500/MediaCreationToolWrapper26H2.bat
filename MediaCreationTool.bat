@@ -146,7 +146,7 @@ goto choice-%MCT%
 set "VER=26300" & set "VID=11_26H2" & set "CB=26300.9457.260913-1737.26h2_ge_release_svc_refresh" & set "CT=2026/09/" & set "CC=2.1"
 :: as workaround for the missing CAB file URL, a products.xml has been added that was downloaded with MediaCreationTool.exe
 :: a local products_11_26H2.xml next to this script is used instead, if present
-set "XML=https://raw.githubusercontent.com/imperia777/MediaCreationTool.bat/hack26h2/products_11_26H2.xml"
+set "XML=https://raw.githubusercontent.com/djk500/MediaCreationToolWrapper26H2.bat/hack26h2/products_11_26H2.xml"
 set "XMLFILE=products_11_26H2.xml"
 set "EXE=https://download.microsoft.com/download/0a8b07d9-a3bf-47b9-b71b-8e13354cec88/MediaCreationTool.exe"
 goto process ::# windows 11 26H2
@@ -154,7 +154,7 @@ goto process ::# windows 11 26H2
 :choice-19
 set "VER=26200" & set "VID=11_25H2" & set "CB=26200.6899.251011-1532.25h2_ge_release_svc_refresh" & set "CT=2025/10/" & set "CC=2.1"
 :: as workaround for the missing CAB file URL, a products.xml has been added that was downloaded with MediaCreationTool.exe
-set "XML=https://raw.githubusercontent.com/geissbuehler/MediaCreationTool.bat/hack25h2/products.xml"
+set "XML=https://raw.githubusercontent.com/djk500/MediaCreationToolWrapper26H2.bat/hack26h2/products_11_25H2.xml"
 set "EXE=https://download.microsoft.com/download/4e211187-7e51-429a-a93f-5bf9a77ad77e/MediaCreationTool.exe"
 goto process ::# windows 11 25H2
 
